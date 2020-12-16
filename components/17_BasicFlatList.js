@@ -4,8 +4,10 @@ import {
     View, Text, Image,
     StyleSheet,
     Alert,
+    TouchableHighlight,
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
+import AddModal from './21_AddModal';
 
 import flatListData from '../data/FlatListData';
 
@@ -21,9 +23,9 @@ class FlatListItem extends Component {
         const swipeSettings = {
             autoClose: true,
             onClose: (secId, rowId, direction) => {
-                if(this.state.activeRowKey != null) {
+                if (this.state.activeRowKey != null) {
                     this.setState({ activeRowKey: null });
-                } 
+                }
             },
             onOpen: (secId, rowId, direction) => {
                 this.setState({ activeRowKey: this.props.item.key });
@@ -99,18 +101,43 @@ export default class BasicFlatList extends Component {
         this.state = ({
             deletedRowKey: null,
         });
+        this._onPressAdd = this._onPressAdd.bind(this);
     }
-    refreshFlatList = (deletedKey) => {
+    refreshFlatList = (activeKey) => {
         this.setState((prevState) => {
             return {
-                deletedRowKey: deletedKey
+                deletedRowKey: activeKey
             };
         });
+        this.refs.flatList.scrollToEnd();
+    }
+    _onPressAdd = () => {
+        // alert('You add item');
+        this.refs.addModal.showAddModal();
     }
     render() {
         return (
-            <View style={{ flex: 1, marginTop: 22 }}>
+            <View style={{ flex: 1 }}>
+                <View style={{
+                    backgroundColor: 'tomato',
+                    height: 64,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                }}>
+                    <TouchableHighlight
+                        style={{ marginRight: 10 }}
+                        underlay='tomato'
+                        onPress={this._onPressAdd}
+                    >
+                        <Image
+                            style={{ width: 35, height: 35 }}
+                            source={require('../icons/icons-add.png')}
+                        />
+                    </TouchableHighlight>
+                </View>
                 <FlatList
+                    ref={"flatList"}
                     data={flatListData}
                     renderItem={({ item, index }) => {
                         // console.log(`Item = ${JSON.stringify(item)}, index = ${index}`);
@@ -122,6 +149,9 @@ export default class BasicFlatList extends Component {
                 >
 
                 </FlatList>
+                <AddModal ref={ 'addModal' } parentFlatList={ this } >
+
+                </AddModal>
             </View>
         );
     }
