@@ -16,7 +16,7 @@ var horizontalStatus = {
         android: "md-sunny"
     }
 };
-var horizontalFlatListData =[
+var horizontalFlatListData = [
     {
         hour: "1 AM",
         status: horizontalStatus.rainy,
@@ -41,27 +41,27 @@ var horizontalFlatListData =[
         hour: "5 AM",
         status: horizontalStatus.sunny,
         degrees: 62
-    }, 
+    },
     {
         hour: "6 AM",
         status: horizontalStatus.cloud,
         degrees: 55
-    }, 
+    },
     {
         hour: "7 AM",
         status: horizontalStatus.thunderstorm,
         degrees: 56
-    }, 
+    },
     {
         hour: "8 AM",
         status: horizontalStatus.cloud,
         degrees: 57
-    }, 
+    },
     {
         hour: "9 AM",
         status: horizontalStatus.sunny,
         degrees: 58
-    }, 
+    },
     {
         hour: "10 AM",
         status: horizontalStatus.sunny,
@@ -69,7 +69,5 @@ var horizontalFlatListData =[
     }
 ];
 
-// module.exports = horizontalStatus;
-// module.exports = horizontalFlatListData;
-export {horizontalStatus};
-export {horizontalFlatListData};
+export { horizontalStatus };
+export { horizontalFlatListData };

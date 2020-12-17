@@ -6,8 +6,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { horizontalStatus } from '../data/horizontalFlatListData';
-import { horizontalFlatListData } from '../data/horizontalFlatListData';
+// import { horizontalStatus } from '../data/horizontalFlatListData';
+import { horizontalFlatListData } from '../data/HorizontalFlatListData';
 
 class HorizontalFlatListItem extends Component {
     render() {
