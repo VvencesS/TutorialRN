@@ -108,7 +108,7 @@ export default class EditModal extends Component {
                         flatListData[foundIndex].name = this.state.foodName;
                         flatListData[foundIndex].foodDescription = this.state.foodDescription;
 
-
+                        this.state.flatListItem.refreshFlatListItem();
                         this.refs.myModal.close();
                     }}
                 >

@@ -18,9 +18,16 @@ class FlatListItem extends Component {
         super(props);
         this.state = {
             activeRowKey: null,
+            numberOfRefresh: 0
         };
     }
-
+    refreshFlatListItem = () => {
+        this.setState((prevState) => {
+            return {
+                numberOfRefresh: prevState.numberOfRefresh + 1
+            };
+        });        
+    }
     render() {
         const swipeSettings = {
             autoClose: true,
