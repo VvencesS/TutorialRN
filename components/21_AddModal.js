@@ -7,6 +7,8 @@ import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import flatListData from '../data/FlatListData';
 
+import { insertNewFoodToServer } from '../networking/Server';
+
 var screen = Dimensions.get('window');
 export default class AddModal extends Component {
     constructor(props) {
@@ -20,23 +22,23 @@ export default class AddModal extends Component {
         this.refs.myModal.open();
     }
     generateKeys = (numbersOfCharacters) => {
-        return require('random-string')({length: numbersOfCharacters});
+        return require('random-string')({ length: numbersOfCharacters });
     }
     render() {
         return (
-            <Modal 
+            <Modal
                 ref={'myModal'}
                 style={{
                     justifyContent: 'center',
                     width: screen.width - 80,
                     height: 280,
                 }}
-                position= 'center'
+                position='center'
                 onClose={() => {
                     // alert('Modal closed');
                 }}
             >
-                <Text 
+                <Text
                     style={{
                         fontSize: 16,
                         fontWeight: 'bold',
@@ -75,7 +77,7 @@ export default class AddModal extends Component {
                     value={this.state.newFoodDescription}
                 />
                 <Button
-                    style={{fontSize: 18, color: 'white'}}
+                    style={{ fontSize: 18, color: 'white' }}
                     containerStyle={{
                         padding: 8,
                         marginLeft: 70,
@@ -85,21 +87,25 @@ export default class AddModal extends Component {
                         backgroundColor: 'mediumseagreen',
                     }}
                     onPress={(event) => {
-                        if(this.state.newFoodName.length === 0 
+                        if (this.state.newFoodName.length === 0
                             || this.state.newFoodDescription.length === 0) {
-                                alert('You must enter food\'s name and description');
-                                return;
+                            alert('You must enter food\'s name and description');
+                            return;
                         }
 
-                        const newKey = this.generateKeys(24);   
+                        const newKey = this.generateKeys(24);
                         const newFood = {
                             key: newKey,
                             name: this.state.newFoodName,
                             imageUrl: "https://loremflickr.com/320/240",
                             foodDescription: this.state.newFoodDescription
                         };
-                        flatListData.push(newFood);
-                        this.props.parentFlatList.refreshFlatList(newKey);
+                        // flatListData.push(newFood);
+                        // this.props.parentFlatList.refreshFlatList(newKey);
+                        insertNewFoodToServer(newFood)
+                            .then(() => {
+                                this.props.parentFlatList.refreshDataFromServer();
+                            });
                         this.refs.myModal.close();
                     }}
                 >
