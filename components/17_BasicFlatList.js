@@ -5,13 +5,16 @@ import {
     StyleSheet,
     Alert,
     TouchableHighlight,
+    RefreshControl
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 
 import AddModal from './21_AddModal';
 import EditModal from './22_EditModal';
 
-import flatListData from '../data/FlatListData';
+// import flatListData from '../data/FlatListData';
+
+import { getFoodsFromServer } from '../networking/Server';
 
 class FlatListItem extends Component {
     constructor(props) {
@@ -26,7 +29,7 @@ class FlatListItem extends Component {
             return {
                 numberOfRefresh: prevState.numberOfRefresh + 1
             };
-        });        
+        });
     }
     render() {
         const swipeSettings = {
@@ -40,7 +43,7 @@ class FlatListItem extends Component {
                 this.setState({ activeRowKey: this.props.item.key });
             },
             right: [
-                { 
+                {
                     onPress: () => {
                         // alert('Update');
                         this.props.parentFlatList.refs.editModal.showEditModal(flatListData[this.props.index], this);
@@ -116,8 +119,28 @@ export default class BasicFlatList extends Component {
         super(props);
         this.state = ({
             deletedRowKey: null,
+            refresh: false,
+            foodsFromServer: []
         });
         this._onPressAdd = this._onPressAdd.bind(this);
+    }
+    componentDidMount() {
+        this.refreshDataFromServer();
+    }
+    refreshDataFromServer = () => {
+        this.setState({ refresh: true });
+        getFoodsFromServer()
+            .then((foods) => {
+                this.setState({ foodsFromServer: foods });
+                this.setState({ refresh: false });
+            })
+            .catch((err) => {
+                this.setState({ foodsFromServer: [] });
+                this.setState({ refresh: false });
+            });
+    }
+    onRefresh = () => {
+        this.refreshDataFromServer();
     }
     refreshFlatList = (activeKey) => {
         this.setState((prevState) => {
@@ -154,7 +177,8 @@ export default class BasicFlatList extends Component {
                 </View>
                 <FlatList
                     ref={"flatList"}
-                    data={flatListData}
+                    // data={flatListData}
+                    data={this.state.foodsFromServer}
                     renderItem={({ item, index }) => {
                         // console.log(`Item = ${JSON.stringify(item)}, index = ${index}`);
                         return (
@@ -162,14 +186,21 @@ export default class BasicFlatList extends Component {
 
                             </FlatListItem>);
                     }}
+                    keyExtractor={(item, index) => item.name}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refresh}
+                            onRefresh={this.onRefresh}
+                        />
+                    }
                 >
 
                 </FlatList>
-                <AddModal ref={ "addModal" } parentFlatList={ this } >
+                <AddModal ref={"addModal"} parentFlatList={this} >
 
                 </AddModal>
-                <EditModal ref={ "editModal" } parentFlatList={ this } >
-                
+                <EditModal ref={"editModal"} parentFlatList={this} >
+
                 </EditModal>
             </View>
         );

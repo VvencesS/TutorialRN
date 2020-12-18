@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Cream Tea",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "This is a cup of cream tea"
+    },
+    {
+        "name": "Fresh mushroom",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Fresh mushroom with vegetables"
+    },
+    {
+        "name": "Japanese Oyster",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Oysters with ice rock"
+    },
+    {
+        "name": "Korean Kimchi",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Traditional Korean Food"
+    },
+    {
+        "name": "Multiple salad",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Salad mixed with mushroom"
+    },
+    {
+        "name": "Vegetable",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Fresh vegetables"
+    },
+    {
+        "name": "traditional japanese salad",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Very delicious Japanese Salad"
+    },
+    {
+        "name": "japanese ",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Very delicious Japanese Salad"
+    },
+    {
+        "name": "Oyster",
+        "imageUrl": "https://loremflickr.com/320/240",
+        "foodDescription": "Oysters with ice rock"
+    }
+]
