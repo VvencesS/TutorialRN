@@ -1,14 +1,15 @@
 /**
  * @format
  */
-
+import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
+
 // import App from './App';
 import { name as appName } from './app.json';
 // import VerticalScrollView from './components/14_VerticalScrollView';
 // import HorizontalScrollView from './components/15_HorizontalScrollView';
 // import ViewPagerExample from './components/16_ViewPagerAndroid';
-import BasicFlatList from './components/17_BasicFlatList';
+// import BasicFlatList from './components/17_BasicFlatList';
 // import HorizontalFlatList from './components/23_HorizontalFlatList';
 // import BasicSectionList from './components/24_BasicSectionList';
 // import LifeCycleComponent from './components/25_LifeCycleComponent';
@@ -26,4 +27,4 @@ const App = () => (
     </Provider>
 );
 
-AppRegistry.registerComponent(appName, () => BasicFlatList);
+AppRegistry.registerComponent(appName, () => App);

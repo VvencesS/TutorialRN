@@ -1,4 +1,4 @@
-import {CombineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import taskReducers from './taskReducers';
 
 const allReducers = combineReducers({
