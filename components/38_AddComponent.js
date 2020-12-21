@@ -51,6 +51,7 @@ export default class AddComponent extends Component {
                             return;
                         }
                         //Call click event => use "Container"
+                        this.props.onClickAdd(this.state.newTaskName);
                     }}
                 >
                     <Image

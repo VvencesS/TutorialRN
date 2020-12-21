@@ -19,11 +19,12 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import allReducers from './reducers';
+import TaskManagerComponent from './components/39_TaskManageComponent';
 
 let store = createStore(allReducers);
 const App = () => (
     <Provider store={store}>
-        
+        <TaskManagerComponent/>
     </Provider>
 );
 

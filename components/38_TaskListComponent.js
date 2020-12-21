@@ -6,6 +6,8 @@ import {
     RefreshControl, TextInput
 } from 'react-native';
 
+import TaskItemContainer from '../containers/TaskItemContainer';
+
 export default class TaskListComponent extends Component {
     render() {
         return (<FlatList
