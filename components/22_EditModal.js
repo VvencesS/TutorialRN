@@ -5,7 +5,9 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
-import flatListData from '../data/FlatListData';
+
+// import flatListData from '../data/FlatListData';
+import { updateAFood } from '../networking/Server';
 
 var screen = Dimensions.get('window');
 export default class EditModal extends Component {
@@ -15,37 +17,38 @@ export default class EditModal extends Component {
             foodName: '',
             foodDescription: ''
         };
-        console.log(`Call 1: ${this.state.foodName}`);
+        // console.log(`Call 1: ${this.state.foodName}`);
     }
     showEditModal = (editingFood, flatListItem) => {
-        // console.log(`editingFood = ${JSON.stringify(editingFood)}`);
+        console.log(`editingFood = ${JSON.stringify(editingFood)}`);
         this.setState = {
-            key: editingFood.key,
+            // key: editingFood.key,
+            key: editingFood._id,
             foodName: editingFood.name,
             foodDescription: editingFood.foodDescription,
             flatListItem: flatListItem,
         }
         this.refs.myModal.open();
-        console.log(`Call 2: ${JSON.stringify(editingFood)}`);
+        // console.log(`Call 2: ${JSON.stringify(editingFood)}`);
     }
     generateKeys = (numbersOfCharacters) => {
-        return require('random-string')({length: numbersOfCharacters});
+        return require('random-string')({ length: numbersOfCharacters });
     }
     render() {
         return (
-            <Modal 
+            <Modal
                 ref={"myModal"}
                 style={{
                     justifyContent: 'center',
                     width: screen.width - 80,
                     height: 280,
                 }}
-                position= 'center'
+                position='center'
                 onClose={() => {
                     // alert('Modal closed');
                 }}
             >
-                <Text 
+                <Text
                     style={{
                         fontSize: 16,
                         fontWeight: 'bold',
@@ -53,7 +56,7 @@ export default class EditModal extends Component {
                         marginTop: 40
                     }}
                 >
-                    Update food's information 
+                    Update food's information
                 </Text>
                 <TextInput
                     style={{
@@ -84,7 +87,7 @@ export default class EditModal extends Component {
                     value={this.state.foodDescription}
                 />
                 <Button
-                    style={{fontSize: 18, color: 'white'}}
+                    style={{ fontSize: 18, color: 'white' }}
                     containerStyle={{
                         padding: 8,
                         marginLeft: 70,
@@ -94,22 +97,41 @@ export default class EditModal extends Component {
                         backgroundColor: 'mediumseagreen',
                     }}
                     onPress={(event) => {
-                        if(this.state.foodName.length === 0 
+                        if (this.state.foodName.length === 0
                             || this.state.foodDescription.length === 0) {
-                                alert('You must enter food\'s name and description');
-                                return;
+                            alert('You must enter food\'s name and description');
+                            return;
                         }
 
                         // Update existing food
-                        var foundIndex = flatListData.findIndex(item => this.state.key = item.key);
-                        if(foundIndex < 0) {
-                            return; // not found
-                        }
-                        flatListData[foundIndex].name = this.state.foodName;
-                        flatListData[foundIndex].foodDescription = this.state.foodDescription;
+                        // var foundIndex = flatListData.findIndex(item => this.state.key = item.key);
+                        // if(foundIndex < 0) {
+                        //     return; // not found
+                        // }
+                        // flatListData[foundIndex].name = this.state.foodName;
+                        // flatListData[foundIndex].foodDescription = this.state.foodDescription;
 
-                        this.state.flatListItem.refreshFlatListItem();
-                        this.refs.myModal.close();
+                        let params = {
+                            food_id: this.state.key,
+                            name: this.state.foodName,
+                            foodDescription: this.state.foodDescription
+                        };
+                        updateAFood(params).then((result) => {
+                            this.state.flatListItem.refreshFlatListItem({
+                                _id: this.state.key,
+                                name: this.state.foodName,
+                                foodDescription: this.state.foodDescription
+                            });
+
+                            this.refs.myModal.close();
+                        }).catch((error) => {
+                            console.log(`${error}`);
+
+                            this.refs.myModal.close();
+                        })
+
+                        // this.state.flatListItem.refreshFlatListItem();
+                        // this.refs.myModal.close();
                     }}
                 >
                     Update

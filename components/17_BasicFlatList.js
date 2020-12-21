@@ -21,15 +21,12 @@ class FlatListItem extends Component {
         super(props);
         this.state = {
             activeRowKey: null,
-            numberOfRefresh: 0
+            numberOfRefresh: 0,
+            item: {}
         };
     }
-    refreshFlatListItem = () => {
-        this.setState((prevState) => {
-            return {
-                numberOfRefresh: prevState.numberOfRefresh + 1
-            };
-        });
+    refreshFlatListItem = (changedItem) => {
+        this.setState({ item: changedItem });
     }
     render() {
         const swipeSettings = {
@@ -46,7 +43,9 @@ class FlatListItem extends Component {
                 {
                     onPress: () => {
                         // alert('Update');
-                        this.props.parentFlatList.refs.editModal.showEditModal(flatListData[this.props.index], this);
+                        // this.props.parentFlatList.refs.editModal.showEditModal(flatListData[this.props.index], this);
+                        let selectedItem = this.state.item.name ? this.state.item : this.props.item;
+                        this.props.parentFlatList.refs.editModal.showEditModal(selectedItem, this);
                     },
                     text: 'Edit', type: 'primary'
                 },
@@ -96,8 +95,12 @@ class FlatListItem extends Component {
                         </Image>
 
                         <View style={{ flex: 1, flexDirection: 'column' }}>
-                            <Text style={styles.flatListItem}>{this.props.item.name}</Text>
-                            <Text style={styles.flatListItem}>{this.props.item.foodDescription}</Text>
+                            <Text style={styles.flatListItem}>
+                                {this.state.item.name ? this.state.item.name : this.props.item.name}
+                            </Text>
+                            <Text style={styles.flatListItem}>
+                                {this.state.item.foodDescription ? this.state.item.foodDescription : this.props.item.foodDescription}
+                            </Text>
                         </View>
                     </View>
                     <View style={{ height: 1, backgroundColor: 'white' }}></View>
